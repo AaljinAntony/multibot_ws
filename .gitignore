@@ -1,4 +1,40 @@
+# ==========================================
+# ROS 2 & Build System Ignores
+# ==========================================
+install/
 build/
 log/
-install/
+
+# ==========================================
+# C/C++ Building and IDEs
+# ==========================================
 .vscode/
+.clangd/
+.cache/
+*.vc.db
+*.vc.db-journal
+*.o
+*.so
+*.a
+
+# ==========================================
+# Python Artifacts
+# ==========================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.env
+.venv
+env/
+venv/
+
+# ==========================================
+# OS / System Specific
+# ==========================================
+.DS_Store
+Thumbs.db
+
+
+src/turtlebot_gazebo/models
