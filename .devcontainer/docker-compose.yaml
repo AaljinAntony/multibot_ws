@@ -1,0 +1,61 @@
+# extention(x-) - telling doker to ignore this. $ -anchor , * -alias
+x-essedtial_env: &env
+  environment:
+    - DISPLAY=$DISPLAY
+    - ROS_DOMAIN_ID=42
+  devices:
+    - "/dev/dri:/dev/dri"
+  volumes:
+    - "/tmp/.X11-unix:/tmp/.X11-unix"
+  networks:
+    - tort_net
+services:
+  launch_gazebo:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    image: tortoisebot_img
+    command: bin/bash -ic "source /home/aaljin/.bashrc && ros2 launch tortoisebot_gazebo ign_gazebo.launch.py"
+    #use ' bin/bash -c '<cmd>' ' for running properly in treminal. if a program exists no need to use this. -c command, -i intaractive_mode_terminal . && cd /home/ws && colcon build && source /home/ws/install/setup.bash 
+    # <<: [*display, *env]
+    <<: *env
+    restart: unless-stopped
+    
+
+    
+  # test_display:  #for testing
+  #   image: tortoisebot_img
+  #   command: glxgears
+  #   <<: *display
+  launch_rviz:
+    image: tortoisebot_img
+    command: bin/bash -ic "source /home/aaljin/.bashrc && ros2 launch tortoisebot_description display.launch.py"
+    depends_on:
+      - launch_gazebo
+    <<: *env
+    restart: unless-stopped
+
+
+
+  launch_navigation:
+    image: tortoisebot_img
+    command: bin/bash -ic "source /home/aaljin/.bashrc && ros2 launch tortoisebot_navigation bringup_launch.py"
+    depends_on:
+      - launch_gazebo
+    <<: *env
+    restart: unless-stopped
+
+
+
+  spawn_waypoints:
+    image: tortoisebot_img
+    command: bin/bash -ic "source /home/aaljin/.bashrc && ros2 run tortoisebot_waypoint waypoint_follower"
+    depends_on:
+      - launch_gazebo
+      - launch_navigation
+    <<: *env
+
+
+
+networks:
+  tort_net:

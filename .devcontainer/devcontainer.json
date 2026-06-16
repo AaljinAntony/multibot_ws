@@ -1,0 +1,52 @@
+{
+    "name": "ROS 2 Humble Development Container",
+    "privileged": true,
+    "remoteUser": "aaljin",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "args": {
+            "USERNAME": "aaljin"
+        }
+    },
+    "workspaceFolder": "/home/ws",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/ws,type=bind",
+    "customizations": {
+        "vscode": {
+            "extensions":[
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-themes",
+                "rogalmic.bash-debug",
+                "DotJoshJohnson.xml",
+                "morningfrog.urdf-visualizer",
+                "mkxml.vscode-filesize",
+                "sleistner.vscode-fileutils",
+                "ms-vscode.cmake-tools",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-python.vscode-pylance",
+                "ms-python.python",
+                "ms-python.debugpy",
+                "ms-python.vscode-python-envs",
+                "ms-azuretools.vscode-containers",
+                "mutantdino.resourcemonitor",
+                "Ranch-Hand-Robotics.rde-pack",
+                "nonanonno.vscode-ros2"
+            ]
+        }
+    },
+    "containerEnv": {
+        "DISPLAY": "unix:0"
+        // "ROS_LOCALHOST_ONLY": "1",
+        // "ROS_DOMAIN_ID": "42"
+    },
+    "runArgs": [
+        "--net=host",
+        "--pid=host",
+        "--ipc=host",
+        "-e", "DISPLAY=${env:DISPLAY}"
+    ],
+    "mounts": [
+       "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
+       "source=/dev/dri,target=/dev/dri,type=bind,consistency=cached"
+    ],
+    "postCreateCommand": "/bin/bash -ic 'sudo chown -R $(whoami) /home/ws/ && cd /home/ws && rm -rf build/ log/ install/ && sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src --rosdistro=${ROS_DISTRO} -y && source /home/aaljin/.bashrc && colcon build'"
+}
