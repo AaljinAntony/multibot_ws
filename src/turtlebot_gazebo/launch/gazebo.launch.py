@@ -441,7 +441,7 @@ def generate_launch_description():
             actions=[navigation_node] # The launch action(s) to execute after the timer expires
         )
         delayed_exp = TimerAction(
-            period=30.0,             # Delay duration in seconds (e.g., 10.0 seconds)
+            period=40.0,             # Delay duration in seconds (e.g., 10.0 seconds)
             actions=[frontier_node] # The launch action(s) to execute after the timer expires
         )
         delayed_map_merge_node = TimerAction(

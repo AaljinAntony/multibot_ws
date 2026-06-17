@@ -11,7 +11,7 @@ log/
 .vscode/
 .clangd/
 .cache/
-*.vc.db
+*.vc.db*
 *.vc.db-journal
 *.o
 *.so
@@ -38,3 +38,5 @@ Thumbs.db
 
 
 src/turtlebot_gazebo/models
+
+*matches*
