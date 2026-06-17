@@ -9,6 +9,7 @@ log/
 # C/C++ Building and IDEs
 # ==========================================
 .vscode/
+.vscode
 .clangd/
 .cache/
 *.vc.db*
